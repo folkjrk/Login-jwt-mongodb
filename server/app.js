@@ -1,19 +1,23 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const authRoutes = require('./routes/auth');
 
-const app = express();
-const PORT = process.env.PORT || 3000;
+const authRoutes = require('./routes/auth.js');
+const protectedRoute = require('./routes/protectedRoute.js')
 
 // Load environment variables
 dotenv.config();
+
+const app = express();
+const PORT = process.env.PORT || 3200;
 
 // Middleware
 app.use(express.json());
 
 // Routes
 app.use('/auth', authRoutes);
+app.use('/protected', protectedRoute);
+
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
