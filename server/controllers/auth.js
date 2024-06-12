@@ -24,6 +24,7 @@ module.exports.register = async (req, res) => {
     }
 }
 
+
 /* LOGGING IN */
 module.exports.login = async (req, res) => {
     try {
