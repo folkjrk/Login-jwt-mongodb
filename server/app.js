@@ -15,15 +15,17 @@ const PORT = process.env.PORT || 3200;
 // Middleware
 const cors = require('cors');
 
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5175', // Adjust the origin as needed
+    credentials: true
+  }));
 app.use(express.json());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // Routes
 app.use('/auth', authRoutes);
-app.use('/protected', protectedRoute);
-
+app.use('/', protectedRoute);
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true })
