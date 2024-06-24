@@ -4,9 +4,7 @@ import {Formik} from 'Formik';
 const Register = ()=>{
 
     return(
-    <>
     <p>Register</p>
-    </>
      )
 }
 

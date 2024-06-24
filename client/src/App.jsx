@@ -1,25 +1,16 @@
 import { BrowserRouter, Navigate, Routes, Route } from "react-router-dom";
-import { useDispatch} from 'react-redux';
+import { useSelector} from 'react-redux';
 import Login from './scenes/LoginPage/Login';
 import Home from './scenes/HomePage/Home'
 import './App.css'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
-import { useEffect } from "react";
-import { setLogin } from "./state";
+
 
 function App() {
-  const dispatch = useDispatch();
-  const StoredToken = localStorage.getItem('accessToken');
 
-  useEffect(()=>{
-    if(StoredToken) {
-      dispatch(setLogin(StoredToken));
-    }
-  }, [dispatch]);
-  const isAuth = Boolean(StoredToken);
+  const isAuth = Boolean(useSelector((state) => state.token));
 
   return (
-    <>
       <BrowserRouter>
         <Routes>
         <Route path="/" element={<Login />} />
@@ -29,7 +20,6 @@ function App() {
             />
         </ Routes>    
       </BrowserRouter>
-    </>
   )
 }
 
