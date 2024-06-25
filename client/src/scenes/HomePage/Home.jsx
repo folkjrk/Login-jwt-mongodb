@@ -1,11 +1,22 @@
-// components/Home.js
 import React from "react";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { setLogout } from "../../state";
+
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector((state) => state.user);
   const token = useSelector((state) => state.token);
   const tokenSession = localStorage.getItem("accessToken");
+
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    dispatch(setLogout()); 
+    navigate('/');
+  };
 
   if (!tokenSession) {
     return (
@@ -16,12 +27,20 @@ const Home = () => {
   }
 
   return (
-    <div className="m-10 flex items-center justify-center">
+    <div className="items-center">
       <h1>Home page, login successful</h1>
       <h2>User Profile</h2>
-      <p>Username: {user}</p>
-      <p>TokenFormState: {token}</p>
-      <p>TokenFormLocalStorage: {tokenSession}</p>
+      <ul>
+        <li>Username: {user}</li>
+        <li>TokenFormState: {token}</li>
+        <li>TokenFormLocalStorage: {tokenSession}</li>
+      </ul>
+      <button 
+          onClick={handleLogout} 
+          className="mt-5 p-2 bg-red-500 text-white rounded"
+        >
+          Logout
+        </button>
     </div>
   );
 };
